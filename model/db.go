@@ -16,15 +16,14 @@ func InitDb() {
 	// mysql 配置: https://github.com/go-sql-driver/mysql#dsn-data-source-name
 	// data source name
 
+	// 初始化数据库
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		utils.DbUser,
 		utils.DbPassWord,
 		utils.DbHost,
 		utils.DbPort,
 		utils.DbName)
-
 	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
-
 	if err != nil {
 		fmt.Println("数据库连接失败!\n", err)
 	}

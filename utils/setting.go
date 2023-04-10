@@ -17,6 +17,7 @@ var (
 	DbName     string
 )
 
+// 后面内容从config.ini中读取设置信息 并进行存储
 // init()函数先于main函数执行
 func init() {
 	file, err := ini.Load("config/config.ini")
@@ -30,7 +31,7 @@ func init() {
 
 func LoadServer(file *ini.File) {
 	AppMode = file.Section("server").Key("AppMode").MustString("default")
-	HttpPort = file.Section("server").Key("HttpPort").MustString("3000")
+	HttpPort = file.Section("server").Key("HttpPort").MustString(":3000")
 }
 
 func LoadData(file *ini.File) {
