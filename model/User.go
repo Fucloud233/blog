@@ -31,7 +31,7 @@ func CheckUser(name string) (code int) {
 // 新增用户 返回一个code
 func CreateUser(data *User) int {
 	// 添加密码加
-	data.Password = scrpyPw(data.Password)
+	data.Password = bcryptPw(data.Password)
 
 	err := db.Create(&data).Error
 
@@ -52,9 +52,9 @@ func GetUsers(pageSize int, pageNum int) []User {
 	return users
 }
 
-// bcrpyPw 密码加密
+// bcryptPw 密码加密
 // https://pkg.go.dev/golang.org/x/crypto/bcrypt
-func bcrpyPw(password string) string {
+func bcryptPw(password string) string {
 	const cost = 10
 	hashPw, err := bcrypt.GenerateFromPassword([]byte(password), cost)
 	if err != nil {
