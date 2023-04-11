@@ -6,7 +6,7 @@ import (
 )
 
 type Category struct {
-	gorm.Model
+	//gorm.Model
 	ID   uint   `gorm:"primary_key; auto_increment" json:"id"`
 	Name string `gorm:"type: varchar(20); not null " json:"name"`
 }
@@ -24,7 +24,7 @@ func CheckCategory(name string) int {
 func CheckupCategory(id int, name string) int {
 	var category Category
 
-	db.Select("id, username").Where("name = ?", name).First(&category)
+	db.Select("id, name").Where("name = ?", name).First(&category)
 
 	if category.ID == uint(id) {
 		return errmsg.SUCCESS
@@ -46,7 +46,7 @@ func CreateCategory(data *Category) int {
 
 func DeleteCategory(id int) int {
 	var category Category
-	err := db.Delete(id, category).Error
+	err := db.Delete(&category, id).Error
 	if err != nil {
 		return errmsg.ERROR_CATEGORY_NOT_EXSIT
 	}
