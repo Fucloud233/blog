@@ -35,7 +35,12 @@ func InitRouter() {
 		v1Router.GET("categories", v1.GetCategories)
 		v1Router.PUT("category/:id", v1.EditCategory)
 		v1Router.DELETE("category/:id", v1.DeleteCategory)
+
 		// 文章模块路由接口
+		v1Router.POST("article/add", v1.AddArticle)
+		v1Router.GET("articles", v1.GetArticles)
+		v1Router.PUT("article/:id", v1.EditArticle)
+		v1Router.DELETE("article/:id", v1.DeleteArticle)
 	}
 
 	r.Run(utils.HttpPort)

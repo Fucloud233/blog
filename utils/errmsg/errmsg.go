@@ -16,6 +16,8 @@ const (
 
 	// code = 2000 文章模块的错误
 
+	ERROR_Article_NOT_EXSIT = 2003
+
 	// code = 3000 分类模块的错误
 
 	ERROR_CATEGORYNAME_USED  = 3001
@@ -33,6 +35,8 @@ var codeMsg = map[int]string{
 	ERROR_TOKEN_RUNTIME:    "TOKEN过期",
 	ERROR_TOKEN_WRONG:      "TOKEN不正确",
 	ERROR_TOKEN_TYPE_WRONG: "TOKEN格式错误",
+
+	ERROR_Article_NOT_EXSIT: "文章不存在",
 
 	ERROR_CATEGORYNAME_USED:  "分类名已存在",
 	ERROR_CATEGORY_NOT_EXSIT: "分类不存在",
