@@ -20,14 +20,54 @@ func AddArticle(c *gin.Context) {
 		"data":    data,
 		"message": errmsg.GetErrMsg(code),
 	})
-
 }
 
-// 查询单个用户
+// GetArticle 查询单个文章
+func GetArticle(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
 
-// GetArticles 查询用户列表
+	data, code := model.GetArticle(id)
+	c.JSON(http.StatusOK, gin.H{
+		"status":  code,
+		"data":    data,
+		"message": errmsg.GetErrMsg(code),
+	})
+}
+
+// GetArticles 查询文章列表
 func GetArticles(c *gin.Context) {
+	pageSize, _ := strconv.Atoi(c.Query("pagesize"))
+	pageNum, _ := strconv.Atoi(c.Query("pagenum"))
 
+	if pageSize == 0 {
+		pageSize = -1
+	}
+
+	if pageNum == 0 {
+		pageNum = -1
+	}
+
+	data, code := model.GetArticles(pageSize, pageNum)
+
+	c.JSON(http.StatusOK, gin.H{
+		"status":  code,
+		"data":    data,
+		"message": errmsg.GetErrMsg(code),
+	})
+}
+
+func GetArticleFromCategory(c *gin.Context) {
+	pageSize, _ := strconv.Atoi(c.Query("pagesize"))
+	pageNum, _ := strconv.Atoi(c.Query("pagenum"))
+	cid, _ := strconv.Atoi(c.Param("cid"))
+
+	data, code, total := model.GetArticleFromCategory(cid, pageSize, pageNum)
+	c.JSON(http.StatusOK, gin.H{
+		"status":  code,
+		"data":    data,
+		"total":   total,
+		"message": errmsg.GetErrMsg(code),
+	})
 }
 
 // EditArticle 编辑用户
