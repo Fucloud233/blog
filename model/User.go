@@ -42,6 +42,29 @@ func CheckupUser(id int, name string) (code int) {
 	return errmsg.SUCCESS
 }
 
+// CheckLogin 后台登陆验证
+func CheckLogin(username string, password string) (User, int) {
+	var user User
+
+	db.Where("username = ?", username).First(&user)
+
+	// 判断数据库中是否包含这个对象
+	if user.ID == 0 {
+		return user, errmsg.ERROR_USER_NOT_EXSIT
+	}
+	// 判断唉用户是否是管理员
+	if user.Role != 1 {
+		return user, errmsg.ERROR_USER_NOT_RIGHT
+	}
+
+	// 判断密码是否正确
+	passwordErr := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+	if passwordErr != nil {
+		return user, errmsg.ERROR_PASSWORD_WRONG
+	}
+	return user, errmsg.SUCCESS
+}
+
 // CreateUser 新增用户 返回一个code
 func CreateUser(data *User) int {
 	// 添加密码加
